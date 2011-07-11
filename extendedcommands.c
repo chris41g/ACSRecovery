@@ -132,7 +132,7 @@ void show_install_update_menu()
                     break;
                 ensure_path_mounted("/sd-ext");
                 ensure_path_mounted("/cache");
-                if (confirm_selection( "Confirm wipe?", "Yes - Wipe Dalvik Cache")) {
+                if (confirm_selection( "Confirm wipe?", "Yes - Wipe")) {
                     __system("rm -r /data/*");
                     __system("rm -r /cache/dalvik-cache");
                     __system("rm -r /sd-ext/dalvik-cache");
@@ -878,9 +878,10 @@ void show_nandroid_menu()
         case 2:
         {
     char str[255];
+    char stra[255];
     property_get("ro.cwm.prefer_tar", str, "false");
     if (strcmp("true", str) != 0) {
-       __system("setprop ro.cwm.prefer_tar true");
+       property_set("ro.cwm.prefer_tar", "true");
             static char* headers[] = {  "Nandroid - Tar Format",
                                         "",
                                         NULL
@@ -893,10 +894,11 @@ void show_nandroid_menu()
                                     NULL
                                   };
         get_menu_selection(headers, list, 0, 0); 
+	break;
     }
 
     else{
-             __system("setprop ro.cwm.prefer_tar false");
+             property_set("ro.cwm.prefer_tar", "false");
             static char* headers[] = {  "Nandroid - Yaffs2 Format",
                                         "",
                                         NULL
@@ -909,6 +911,7 @@ void show_nandroid_menu()
                                     NULL
                                   };
         get_menu_selection(headers, list, 0, 0); 
+    	break;
     }
 
             
