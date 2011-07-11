@@ -717,7 +717,7 @@ prompt_and_wait() {
                 }
                 break;
 
-            case ITEM_APPLY_SDCARD:
+           /* case ITEM_APPLY_SDCARD:
                 if (confirm_selection("Confirm install?", "Yes - Install /sdcard/update.zip"))
                 {
                     ui_print("\n-- Install from sdcard...\n");
@@ -731,7 +731,7 @@ prompt_and_wait() {
                         ui_print("\nInstall from sdcard complete.\n");
                     }
                 }
-                break;
+                break; */
             case ITEM_INSTALL_ZIP:
                 show_install_update_menu();
                 break;

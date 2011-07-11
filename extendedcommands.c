@@ -133,7 +133,7 @@ void show_install_update_menu()
                 ensure_path_mounted("/sd-ext");
                 ensure_path_mounted("/cache");
                 if (confirm_selection( "Confirm wipe?", "Yes - Wipe Dalvik Cache")) {
-                    __system("rm -r /data/*);
+                    __system("rm -r /data/*");
                     __system("rm -r /cache/dalvik-cache");
                     __system("rm -r /sd-ext/dalvik-cache");
                     __system("rm -r /cache/*");
@@ -881,14 +881,14 @@ void show_nandroid_menu()
             static char* headers[] = {  "Nandroid - Tar Format",
                                         "",
                                         NULL
-                                     }
+                                     };
 
             static char* list[] = { "Backup",
                                     "Restore",
                                     "Enable Yaffs2 Backups"
                                     "Advanced Restore",
                                     NULL
-                                  }
+                                  };
         get_menu_selection(headers, list, 0, 0);
         }
         case 3:
