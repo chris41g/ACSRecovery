@@ -888,14 +888,14 @@ void show_nandroid_menu()
 
             static char* list[] = { "Backup",
                                     "Restore",
-                                    "Enable Yaffs2 Backups"
+                                    "Enable Yaffs2 Backups",
                                     "Advanced Restore",
                                     NULL
                                   };
         get_menu_selection(headers, list, 0, 0); 
     }
 
-   if (strcmp("true", str) = 0) {
+    else{
              __system("setprop ro.cwm.prefer_tar false");
             static char* headers[] = {  "Nandroid - Yaffs2 Format",
                                         "",
@@ -904,7 +904,7 @@ void show_nandroid_menu()
 
             static char* list[] = { "Backup",
                                     "Restore",
-                                    "Enable Tar Backups"
+                                    "Enable Tar Backups",
                                     "Advanced Restore",
                                     NULL
                                   };
