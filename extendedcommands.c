@@ -77,19 +77,21 @@ int install_zip(const char* packagefilepath)
     return 0;
 }
 
-char* INSTALL_MENU_ITEMS[] = {  "apply /sdcard/update.zip",
-                                "choose zip from sdcard",
+char* INSTALL_MENU_ITEMS[] = {  "choose zip from sdcard",
+                                "pre-theme install wipe",
+                                "pre-rom install wipe",
                                 "toggle signature verification",
                                 "toggle script asserts",
                                 NULL };
-#define ITEM_APPLY_SDCARD     0
-#define ITEM_CHOOSE_ZIP       1
-#define ITEM_SIG_CHECK        2
-#define ITEM_ASSERTS          3
+#define ITEM_CHOOSE_ZIP       0
+#define ITEM_PRE_THEME        1
+#define ITEM_PRE_ROM          2
+#define ITEM_SIG_CHECK        3
+#define ITEM_ASSERTS          4
 
 void show_install_update_menu()
 {
-    static char* headers[] = {  "Apply update from .zip file on SD card",
+    static char* headers[] = {  "Install a zip file on SD card",
                                 "",
                                 NULL
     };
@@ -104,10 +106,40 @@ void show_install_update_menu()
             case ITEM_SIG_CHECK:
                 toggle_signature_check();
                 break;
-            case ITEM_APPLY_SDCARD:
+            case ITEM_PRE_THEME:
             {
-                if (confirm_selection("Confirm install?", "Yes - Install /sdcard/update.zip"))
-                    install_zip(SDCARD_UPDATE_FILE);
+                if (confirm_selection("Confirm wiping Cache and Dalvik?", "Yes - Wipe"))
+                   
+                if (0 != ensure_path_mounted("/data"))
+                    break;
+                ensure_path_mounted("/sd-ext");
+                ensure_path_mounted("/cache");
+                if (confirm_selection( "Confirm wipe?", "Yes - Wipe Dalvik Cache")) {
+                    __system("rm -r /data/dalvik-cache");
+                    __system("rm -r /cache/dalvik-cache");
+                    __system("rm -r /sd-ext/dalvik-cache");
+                    __system("rm -r /cache/*");
+                ensure_path_unmounted("/data");
+                ui_print("Dalvik and Cache wiped.\n");
+                }
+                break;
+            }
+            case ITEM_PRE_ROM:
+            {
+                if (confirm_selection("Confirm wiping Data, Cache and Dalvik?", "Yes - Wipe"))
+                   
+                if (0 != ensure_path_mounted("/data"))
+                    break;
+                ensure_path_mounted("/sd-ext");
+                ensure_path_mounted("/cache");
+                if (confirm_selection( "Confirm wipe?", "Yes - Wipe Dalvik Cache")) {
+                    __system("rm -r /data/*);
+                    __system("rm -r /cache/dalvik-cache");
+                    __system("rm -r /sd-ext/dalvik-cache");
+                    __system("rm -r /cache/*");
+                ensure_path_unmounted("/data");
+                ui_print("Dalvik and Cache wiped.\n");
+                }
                 break;
             }
             case ITEM_CHOOSE_ZIP:
@@ -807,13 +839,14 @@ void show_nandroid_advanced_restore_menu()
 
 void show_nandroid_menu()
 {
-    static char* headers[] = {  "Nandroid",
+    static char* headers[] = {  "Nandroid - Yaffs2 Format",
                                 "",
                                 NULL
     };
 
     static char* list[] = { "Backup",
                             "Restore",
+                            "Enable Tar Backups"
                             "Advanced Restore",
                             NULL
     };
@@ -843,6 +876,22 @@ void show_nandroid_menu()
             show_nandroid_restore_menu();
             break;
         case 2:
+        {
+            __system("setprop ro.cwm.prefer_tar true");
+            static char* headers[] = {  "Nandroid - Tar Format",
+                                        "",
+                                        NULL
+                                     }
+
+            static char* list[] = { "Backup",
+                                    "Restore",
+                                    "Enable Yaffs2 Backups"
+                                    "Advanced Restore",
+                                    NULL
+                                  }
+        get_menu_selection(headers, list, 0, 0);
+        }
+        case 3:
             show_nandroid_advanced_restore_menu();
             break;
     }
