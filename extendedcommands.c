@@ -843,7 +843,7 @@ char str[255];
         property_get("ro.cwm.prefer_tar", str, "false");
     if (strcmp("true", str) != 0) {
             static char* headers[] = {  "Nandroid - Tar Format",
-                                        "",
+                                        str,
                                         NULL };
 
             static char* list[] = { "Backup",
