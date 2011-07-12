@@ -67,8 +67,8 @@ int device_wipe_data();
 #define GO_BACK             -5
 
 #define ITEM_REBOOT          0
-#define ITEM_POWEROFF        1  
-#define ITEM_DOWNLOAD        2 
+#define ITEM_POWEROFF        1
+#define ITEM_DOWNLOAD        2
 #define ITEM_WIPE_DATA       3
 #define ITEM_WIPE_CACHE      4
 #define ITEM_INSTALL_ZIP     5
