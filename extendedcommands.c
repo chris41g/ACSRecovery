@@ -839,17 +839,32 @@ void show_nandroid_advanced_restore_menu()
 
 void show_nandroid_menu()
 {
-    static char* headers[] = {  "Nandroid - Yaffs2 Format",
-                                "",
-                                NULL
-    };
+char str[255];
+        property_get("ro.cwm.prefer_tar", str, "false");
+    if (strcmp("true", str) != 0) {
+            static char* headers[] = {  "Nandroid - Tar Format",
+                                        "",
+                                        NULL };
 
-    static char* list[] = { "Backup",
-                            "Restore",
-                            "Enable Tar Backups",
-                            "Advanced Restore",
-                            NULL
-    };
+            static char* list[] = { "Backup",
+                                    "Restore",
+                                    "Enable Yaffs2 Backups",
+                                    "Advanced Restore",
+                                    NULL 
+                                  };
+        }
+    else{
+            static char* headers[] = {  "Nandroid - Yaffs2 Format",
+                                        "",
+                                        NULL };
+
+            static char* list[] = { "Backup",
+                                    "Restore",
+                                    "Enable Tar Backups",
+                                    "Advanced Restore",
+                                    NULL 
+                                  };
+    }        
 
     int chosen_item = get_menu_selection(headers, list, 0, 0);
     switch (chosen_item)
@@ -877,37 +892,18 @@ void show_nandroid_menu()
             break;
         case 2:
         {
-    char str[255];
     char stra[255];
-    property_get("ro.cwm.prefer_tar", str, "false");
-    if (strcmp("true", str) != 0) {
-       property_set("ro.cwm.prefer_tar", "true");
-            static char* headers[] = {  "Nandroid - Tar Format",
-                                        "",
-                                        NULL };
-
-            static char* list[] = { "Backup",
-                                    "Restore",
-                                    "Enable Yaffs2 Backups",
-                                    "Advanced Restore",
-                                    NULL 
-                                  };
-    break;
-    }
+        property_get("ro.cwm.prefer_tar", stra, "false");
+    if (strcmp("true", stra) != 0) {
+       __system("setprop ro.cwm.prefer_tar true");
+            show_nandroid_menu();
+            break;
+        }
 
     else{
-       property_set("ro.cwm.prefer_tar", "false");
-            static char* headers[] = {  "Nandroid - Yaffs2 Format",
-                                        "",
-                                        NULL };
-
-            static char* list[] = { "Backup",
-                                    "Restore",
-                                    "Enable Tar Backups",
-                                    "Advanced Restore",
-                                    NULL 
-                                  };
-    break;
+       __system("setprop ro.cwm.prefer_tar false");
+            show_nandroid_menu();
+            break;
     }        
         }
         case 3:
