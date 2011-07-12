@@ -926,11 +926,14 @@ void show_advanced_menu()
                                 NULL
     };
 
-    static char* list[] = { "Reboot Recovery",
+    if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                static char* list[] = { "Reboot Recovery",
                             "Wipe Dalvik Cache",
                             "Wipe Battery Stats",
                             "Report Error",
                             "Key Test",
+                            "Turn Confirmations Off",
 #ifndef BOARD_HAS_SMALL_RECOVERY
                             "Partition SD Card",
                             "Fix Permissions",
@@ -939,7 +942,26 @@ void show_advanced_menu()
 #endif
 #endif
                             NULL
-    };
+                            };
+                };
+                if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                static char* list[] = { "Reboot Recovery",
+                            "Wipe Dalvik Cache",
+                            "Wipe Battery Stats",
+                            "Report Error",
+                            "Key Test",
+                            "Turn Confirmations On",
+#ifndef BOARD_HAS_SMALL_RECOVERY
+                            "Partition SD Card",
+                            "Fix Permissions",
+#ifdef BOARD_HAS_SDCARD_INTERNAL
+                            "Partition Internal SD Card",
+#endif
+#endif
+                            NULL
+                            };
+                };
 
     for (;;)
     {
@@ -992,6 +1014,51 @@ void show_advanced_menu()
             }
             case 5:
             {
+                if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                __system("rm /sdcard/clockworkmod/.no_confirm");
+                static char* list[] = { "Reboot Recovery",
+                            "Wipe Dalvik Cache",
+                            "Wipe Battery Stats",
+                            "Report Error",
+                            "Key Test",
+                            "Turn Confirmations On",
+#ifndef BOARD_HAS_SMALL_RECOVERY
+                            "Partition SD Card",
+                            "Fix Permissions",
+#ifdef BOARD_HAS_SDCARD_INTERNAL
+                            "Partition Internal SD Card",
+#endif
+#endif
+                            NULL
+                            };
+                show_advanced_menu();
+                break;
+                };
+                if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                __system("touch /sdcard/clockworkmod/.no_confirm");
+                static char* list[] = { "Reboot Recovery",
+                            "Wipe Dalvik Cache",
+                            "Wipe Battery Stats",
+                            "Report Error",
+                            "Key Test",
+                            "Turn Confirmations Off",
+#ifndef BOARD_HAS_SMALL_RECOVERY
+                            "Partition SD Card",
+                            "Fix Permissions",
+#ifdef BOARD_HAS_SDCARD_INTERNAL
+                            "Partition Internal SD Card",
+#endif
+#endif
+                            NULL
+                            };
+                show_advanced_menu();
+                break;
+                };
+            }
+            case 6:
+            {
                 static char* ext_sizes[] = { "128M",
                                              "256M",
                                              "512M",
@@ -1033,7 +1100,7 @@ void show_advanced_menu()
                     ui_print("An error occured while partitioning your SD Card. Please see /tmp/recovery.log for more details.\n");
                 break;
             }
-            case 6:
+            case 7:
             {
                 ensure_path_mounted("/system");
                 ensure_path_mounted("/data");
@@ -1042,7 +1109,7 @@ void show_advanced_menu()
                 ui_print("Done!\n");
                 break;
             }
-            case 7:
+            case 8:
             {
                 static char* ext_sizes[] = { "128M",
                                              "256M",
