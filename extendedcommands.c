@@ -846,8 +846,8 @@ void show_nandroid_menu()
 
     static char* list[] = { "Backup",
                             "Restore",
-			    "Enable Tar Backups",
-			    "Advanced Restore",
+                            "Enable Tar Backups",
+                            "Advanced Restore",
                             NULL
     };
 
@@ -884,14 +884,15 @@ void show_nandroid_menu()
        property_set("ro.cwm.prefer_tar", "true");
             static char* headers[] = {  "Nandroid - Tar Format",
                                         "",
-					NULL };
+                                        NULL };
 
             static char* list[] = { "Backup",
-				    "Restore",
-				    "Enable Yaffs2 Backups",
-				    "Advanced Restore",
-				    NULL };
-	    break;
+                                    "Restore",
+                                    "Enable Yaffs2 Backups",
+                                    "Advanced Restore",
+                                    NULL 
+                                  };
+    break;
     }
 
     else{
@@ -901,11 +902,12 @@ void show_nandroid_menu()
                                         NULL };
 
             static char* list[] = { "Backup",
-				    "Restore",
-				    "Enable Tar Backups",
-				    "Advanced Restore",
-				    NULL };
-    	break;
+                                    "Restore",
+                                    "Enable Tar Backups",
+                                    "Advanced Restore",
+                                    NULL 
+                                  };
+    break;
     }        
         }
         case 3:
