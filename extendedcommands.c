@@ -114,11 +114,12 @@ void show_install_update_menu()
                     break;
                 ensure_path_mounted("/sd-ext");
                 ensure_path_mounted("/cache");
-                if (confirm_selection( "Confirm wipe?", "Yes - Wipe Dalvik Cache")) {
-                    __system("rm -r /data/dalvik-cache");
-                    __system("rm -r /cache/dalvik-cache");
-                    __system("rm -r /sd-ext/dalvik-cache");
-                    __system("rm -r /cache/*");
+                ui_print("Erradicating Dalvik...\n");
+                __system("rm -r /data/dalvik-cache");
+                __system("rm -r /cache/dalvik-cache");
+                __system("rm -r /sd-ext/dalvik-cache");
+                ui_print("Crushing Cache...\n");
+                __system("rm -r /cache/*");
                 ensure_path_unmounted("/data");
                 ui_print("Dalvik and Cache wiped.\n");
                 }
@@ -132,14 +133,15 @@ void show_install_update_menu()
                     break;
                 ensure_path_mounted("/sd-ext");
                 ensure_path_mounted("/cache");
-                if (confirm_selection( "Confirm wipe?", "Yes - Wipe")) {
-                    __system("rm -r /data/*");
-                    __system("rm -r /cache/dalvik-cache");
-                    __system("rm -r /sd-ext/dalvik-cache");
-                    __system("rm -r /cache/*");
+                ui_print("Destroying Data...\n");
+                __system("rm -r /data/*");
+                ui_print("Erradicating Dalvik...\n");
+                __system("rm -r /data/dalvik-cache");
+                __system("rm -r /sd-ext/dalvik-cache");
+                ui_print("Crushing Cache...\n");
+                __system("rm -r /cache/*");
                 ensure_path_unmounted("/data");
-                ui_print("Dalvik and Cache wiped.\n");
-                }
+                ui_print("Data,Dalvik and Cache wiped.\n");
                 break;
             }
             case ITEM_CHOOSE_ZIP:
@@ -839,33 +841,14 @@ void show_nandroid_advanced_restore_menu()
 
 void show_nandroid_menu()
 {
-char str[255];
-        property_get("ro.cwm.prefer_tar", str, "false");
-    if (strcmp("true", str) != 0) {
-            static char* headers[] = {  "Nandroid - Tar Format",
-                                        str,
+            static char* headers[] = {  "Nandroid",
                                         NULL };
 
             static char* list[] = { "Backup",
                                     "Restore",
-                                    "Enable Yaffs2 Backups",
                                     "Advanced Restore",
                                     NULL 
                                   };
-        }
-    else{
-            static char* headers[] = {  "Nandroid - Yaffs2 Format",
-                                        "",
-                                        NULL };
-
-            static char* list[] = { "Backup",
-                                    "Restore",
-                                    "Enable Tar Backups",
-                                    "Advanced Restore",
-                                    NULL 
-                                  };
-    }        
-
     int chosen_item = get_menu_selection(headers, list, 0, 0);
     switch (chosen_item)
     {
@@ -890,7 +873,7 @@ char str[255];
         case 1:
             show_nandroid_restore_menu();
             break;
-        case 2:
+       /* case 2:
         {
     char stra[255];
         property_get("ro.cwm.prefer_tar", stra, "false");
@@ -905,8 +888,8 @@ char str[255];
             show_nandroid_menu();
             break;
     }        
-        }
-        case 3:
+        } */
+        case 2:
             show_nandroid_advanced_restore_menu();
             break;
     }
@@ -916,6 +899,7 @@ void wipe_battery_stats()
 {
     ensure_path_mounted("/data");
     remove("/data/system/batterystats.bin");
+    ui_print("Let's forget about that old battery life... \n");
     ensure_path_unmounted("/data");
 }
 
