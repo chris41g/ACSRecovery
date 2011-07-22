@@ -122,7 +122,6 @@ void show_install_update_menu()
                 __system("rm -r /cache/*");
                 ensure_path_unmounted("/data");
                 ui_print("Dalvik and Cache wiped.\n");
-                }
                 break;
             }
             case ITEM_PRE_ROM:
@@ -873,22 +872,6 @@ void show_nandroid_menu()
         case 1:
             show_nandroid_restore_menu();
             break;
-       /* case 2:
-        {
-    char stra[255];
-        property_get("ro.cwm.prefer_tar", stra, "false");
-    if (strcmp("true", stra) != 0) {
-       __system("setprop ro.cwm.prefer_tar true");
-            show_nandroid_menu();
-            break;
-        }
-
-    else{
-       __system("setprop ro.cwm.prefer_tar false");
-            show_nandroid_menu();
-            break;
-    }        
-        } */
         case 2:
             show_nandroid_advanced_restore_menu();
             break;
@@ -909,10 +892,8 @@ void show_advanced_menu()
                                 "",
                                 NULL
     };
-
-    if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
-                {
-                static char* list[] = { "Reboot Recovery",
+    
+    static char* list[] = { "Reboot Recovery",
                             "Wipe Dalvik Cache",
                             "Wipe Battery Stats",
                             "Report Error",
@@ -927,8 +908,8 @@ void show_advanced_menu()
 #endif
                             NULL
                             };
-                };
-                if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
+    struct stat info;
+    if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
                 {
                 static char* list[] = { "Reboot Recovery",
                             "Wipe Dalvik Cache",
@@ -1018,8 +999,8 @@ void show_advanced_menu()
                             };
                 show_advanced_menu();
                 break;
-                };
-                if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
+                }
+               else
                 {
                 __system("touch /sdcard/clockworkmod/.no_confirm");
                 static char* list[] = { "Reboot Recovery",
