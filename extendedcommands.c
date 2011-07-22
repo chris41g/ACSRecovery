@@ -888,44 +888,48 @@ void wipe_battery_stats()
 
 void show_advanced_menu()
 {
+    
     static char* headers[] = {  "Advanced and Debugging Menu",
                                 "",
                                 NULL
     };
-    
-    static char* list[] = { "Reboot Recovery",
-                            "Wipe Dalvik Cache",
-                            "Wipe Battery Stats",
-                            "Report Error",
-                            "Key Test",
-                            "Turn Confirmations Off",
+    struct stat info;
+    if (0 = stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                 static char* list[] = { "Reboot Recovery",
+                                         "Wipe Dalvik Cache",
+                                         "Wipe Battery Stats",
+                                         "Report Error",
+                                         "Key Test",
+                                         "Turn Confirmations Off",
 #ifndef BOARD_HAS_SMALL_RECOVERY
-                            "Partition SD Card",
-                            "Fix Permissions",
+                                         "Partition SD Card",
+                                         "Fix Permissions",
 #ifdef BOARD_HAS_SDCARD_INTERNAL
-                            "Partition Internal SD Card",
+                                         "Partition Internal SD Card",
 #endif
 #endif
-                            NULL
-                            };
+                                         NULL
+                                         };
+                };
     struct stat info;
     if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
                 {
                 static char* list[] = { "Reboot Recovery",
-                            "Wipe Dalvik Cache",
-                            "Wipe Battery Stats",
-                            "Report Error",
-                            "Key Test",
-                            "Turn Confirmations On",
+                                        "Wipe Dalvik Cache",
+                                        "Wipe Battery Stats",
+                                        "Report Error",
+                                        "Key Test",
+                                        "Turn Confirmations On",
 #ifndef BOARD_HAS_SMALL_RECOVERY
-                            "Partition SD Card",
-                            "Fix Permissions",
+                                        "Partition SD Card",
+                                        "Fix Permissions",
 #ifdef BOARD_HAS_SDCARD_INTERNAL
-                            "Partition Internal SD Card",
+                                        "Partition Internal SD Card",
 #endif
 #endif
-                            NULL
-                            };
+                                        NULL
+                                        };
                 };
 
     for (;;)
@@ -982,43 +986,11 @@ void show_advanced_menu()
                 if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
                 {
                 __system("rm /sdcard/clockworkmod/.no_confirm");
-                static char* list[] = { "Reboot Recovery",
-                            "Wipe Dalvik Cache",
-                            "Wipe Battery Stats",
-                            "Report Error",
-                            "Key Test",
-                            "Turn Confirmations On",
-#ifndef BOARD_HAS_SMALL_RECOVERY
-                            "Partition SD Card",
-                            "Fix Permissions",
-#ifdef BOARD_HAS_SDCARD_INTERNAL
-                            "Partition Internal SD Card",
-#endif
-#endif
-                            NULL
-                            };
-                show_advanced_menu();
                 break;
                 }
                else
                 {
                 __system("touch /sdcard/clockworkmod/.no_confirm");
-                static char* list[] = { "Reboot Recovery",
-                            "Wipe Dalvik Cache",
-                            "Wipe Battery Stats",
-                            "Report Error",
-                            "Key Test",
-                            "Turn Confirmations Off",
-#ifndef BOARD_HAS_SMALL_RECOVERY
-                            "Partition SD Card",
-                            "Fix Permissions",
-#ifdef BOARD_HAS_SDCARD_INTERNAL
-                            "Partition Internal SD Card",
-#endif
-#endif
-                            NULL
-                            };
-                show_advanced_menu();
                 break;
                 };
             }
