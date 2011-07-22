@@ -909,7 +909,15 @@ void show_advanced_menu()
 #endif
                                          NULL
                                          };
-               
+                struct stat info;
+                if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                    list[5] = "Turn Confirmations Off";
+                };
+                if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
+                {
+                    list[5] = "Turn Confirmations On";
+                };                        
    for (;;)
     {
         int chosen_item = get_menu_selection(headers, list, 0, 0);
