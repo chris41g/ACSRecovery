@@ -961,7 +961,7 @@ void show_advanced_menu()
             }
             case 5:
             {
-                struct stat info
+                struct stat info;
                 if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
                 {
                 list[6] = "Turn Confirmations Off";
