@@ -961,15 +961,16 @@ void show_advanced_menu()
             }
             case 5:
             {
+                struct stat info
                 if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
                 {
-                list[6] = "Turn Confirmations Off"
+                list[6] = "Turn Confirmations Off";
                 __system("rm /sdcard/clockworkmod/.no_confirm");
                 break;
                 }
                else
                 {
-                list[6] = "Turn Confirmations Off"
+                list[6] = "Turn Confirmations Off";
                 __system("touch /sdcard/clockworkmod/.no_confirm");
                 break;
                 };
