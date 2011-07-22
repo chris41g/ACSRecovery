@@ -893,9 +893,7 @@ void show_advanced_menu()
                                 "",
                                 NULL
     };
-    struct stat info;
-    if (0 = stat("/sdcard/clockworkmod/.no_confirm", &info))
-                {
+    
                  static char* list[] = { "Reboot Recovery",
                                          "Wipe Dalvik Cache",
                                          "Wipe Battery Stats",
@@ -911,28 +909,8 @@ void show_advanced_menu()
 #endif
                                          NULL
                                          };
-                };
-    struct stat info;
-    if (0 != stat("/sdcard/clockworkmod/.no_confirm", &info))
-                {
-                static char* list[] = { "Reboot Recovery",
-                                        "Wipe Dalvik Cache",
-                                        "Wipe Battery Stats",
-                                        "Report Error",
-                                        "Key Test",
-                                        "Turn Confirmations On",
-#ifndef BOARD_HAS_SMALL_RECOVERY
-                                        "Partition SD Card",
-                                        "Fix Permissions",
-#ifdef BOARD_HAS_SDCARD_INTERNAL
-                                        "Partition Internal SD Card",
-#endif
-#endif
-                                        NULL
-                                        };
-                };
-
-    for (;;)
+               
+   for (;;)
     {
         int chosen_item = get_menu_selection(headers, list, 0, 0);
         if (chosen_item == GO_BACK)
@@ -985,11 +963,13 @@ void show_advanced_menu()
             {
                 if (0 == stat("/sdcard/clockworkmod/.no_confirm", &info))
                 {
+                list[6] = "Turn Confirmations Off"
                 __system("rm /sdcard/clockworkmod/.no_confirm");
                 break;
                 }
                else
                 {
+                list[6] = "Turn Confirmations Off"
                 __system("touch /sdcard/clockworkmod/.no_confirm");
                 break;
                 };
